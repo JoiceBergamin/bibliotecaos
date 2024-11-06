@@ -1,5 +1,6 @@
 package com.desenvolvimento.domains;
 
+import com.desenvolvimento.domains.dtos.AutorDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ import java.util.Objects;
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_autor")
-    private int id;
+    private Integer id;
 
     @NotNull @NotBlank
     private String nome;
@@ -37,17 +38,24 @@ public class Autor {
     public Autor() {
     }
 
-    public Autor(int id, String nome, String documentoPessoal) {
+    public Autor(Integer id, String nome, String documentoPessoal) {
         this.id = id;
         this.nome = nome;
         this.documentoPessoal = documentoPessoal;
     }
 
-    public int getId() {
+    public Autor(AutorDTO dto){
+        this.id = dto.getId();
+        this.nome = dto.getNome();
+        this.documentoPessoal = dto.getDocumentoPessoal();
+
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

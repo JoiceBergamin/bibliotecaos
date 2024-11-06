@@ -29,16 +29,18 @@ public class DBService {
     private LivroRepository livroRepository;
 
     public void initDB (){
-        Autor autor01 = new Autor(0, "Machado de Assis", "RG");
-        Editora editora01 = new Editora(0, "60.657.5740001-69", "Editora do Brasil S.A.");
+        Autor autor01 = new Autor(null, "Machado de Assis", "RG");
 
-        Autor autor02 = new Autor(0, "Clarice Lispector", "RG");
-        Editora editora02 = new Editora(0, "62.136.3040001-38", "Editora Moderna Ltda.");
+        Editora editora01 = new Editora(null, "60.657.5740001-69", "Editora do Brasil S.A.");
 
-        Livro livro01 = new Livro(0, "Memórias Póstumas de Brás Cubas", "3268759642385", 480,
+        Autor autor02 = new Autor(null, "Clarice Lispector", "RG");
+
+        Editora editora02 = new Editora(null, "62.136.3040001-38", "Editora Moderna Ltda.");
+
+        Livro livro01 = new Livro(null, "Memórias Póstumas de Brás Cubas", "3268759642385", 480,
                 LocalDate.now(), new BigDecimal("39.90").setScale(2), Status.NAOLIDO, Conservacao.BOM, autor01, editora01);
 
-        Livro livro02 = new Livro(0, "A Hora da Estrela", "8569423674852", 88, LocalDate.now(), new BigDecimal("29.90").setScale(2),
+        Livro livro02 = new Livro(null, "A Hora da Estrela", "8569423674852", 88, LocalDate.now(), new BigDecimal("29.90").setScale(2),
                 Status.NAOLIDO, Conservacao.BOM, autor02, editora02);
 
     autorRepository.save(autor01);

@@ -1,5 +1,6 @@
 package com.desenvolvimento.domains;
 
+import com.desenvolvimento.domains.dtos.EditoraDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,9 +17,10 @@ public class Editora {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_editora")
-  private int id;
+  private Integer id;
 
     @NotNull @NotBlank
+    @Column(unique = true)
   private String cnpj;
 
     @NotNull @NotBlank
@@ -39,11 +41,19 @@ public class Editora {
     public Editora() {
     }
 
-    public Editora(int id, String cnpj, String razaoSocial) {
+    public Editora(Integer id, String cnpj, String razaoSocial) {
         this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
     }
+
+    public Editora(EditoraDTO dto){
+        this.id = dto.getId();
+        this.cnpj = dto.getCnpj();
+        this.razaoSocial = dto.getRazaoSocial();
+
+    }
+
 
     public String getRazaoSocial() {
         return razaoSocial;
@@ -61,11 +71,11 @@ public class Editora {
         this.cnpj = cnpj;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

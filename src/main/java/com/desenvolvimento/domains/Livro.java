@@ -1,5 +1,6 @@
 package com.desenvolvimento.domains;
 
+import com.desenvolvimento.domains.dtos.LivroDTO;
 import com.desenvolvimento.domains.enums.Conservacao;
 import com.desenvolvimento.domains.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,7 +19,7 @@ public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_livro")
-    private long id;
+    private Long id;
 
     @NotNull
     @NotBlank
@@ -26,6 +27,7 @@ public class Livro {
 
     @NotNull
     @NotBlank
+    @Column(unique = true)
     private String isbn;
 
     @NotNull
@@ -60,7 +62,7 @@ public class Livro {
         this.conservacao = Conservacao.BOM;
     }
 
-    public Livro(long id, String titulo, String isbn, int numeroPaginas, LocalDate dataCompra, BigDecimal valorCompra, Status status, Conservacao conservacao, Autor autor, Editora editora) {
+    public Livro(Long id, String titulo, String isbn, int numeroPaginas, LocalDate dataCompra, BigDecimal valorCompra, Status status, Conservacao conservacao, Autor autor, Editora editora) {
         this.id = id;
         this.titulo = titulo;
         this.isbn = isbn;
@@ -73,6 +75,22 @@ public class Livro {
         this.editora = editora;
     }
 
+    public Livro(LivroDTO dto){
+        this.id = dto.getId();
+        this.titulo = dto.getTitulo();
+        this.isbn = dto.getIsbn();
+        this.numeroPaginas = dto.getNumeroPaginas();
+        this.dataCompra = dto.getDataCompra();
+        this.valorCompra = dto.getValorCompra();
+        this.status = Status.toEnum(dto.getStatus());
+        this.conservacao = Conservacao.toEnum(dto.getConservacao());
+        this.autor = new Autor();
+        this.autor.setId(dto.getAutor());
+        this.editora = new Editora();
+        this.editora.setId(dto.getEditora());
+
+    }
+
     public @NotNull @NotBlank String getTitulo() {
         return titulo;
     }
@@ -81,11 +99,11 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

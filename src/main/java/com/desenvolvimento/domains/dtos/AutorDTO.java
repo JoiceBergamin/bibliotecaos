@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class AutorDTO {
 
-    private int id;
+    private Integer id;
 
     @NotNull(message = "O campo Nome não pode ser nulo")
     @NotBlank(message = "O campo Nome não pode estar vazio ")
@@ -26,11 +26,11 @@ public class AutorDTO {
         this.documentoPessoal = autor.getDocumentoPessoal();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,16 +1,18 @@
 package com.desenvolvimento.resources;
 
+import com.desenvolvimento.domains.Autor;
 import com.desenvolvimento.domains.Livro;
+import com.desenvolvimento.domains.dtos.AutorDTO;
 import com.desenvolvimento.domains.dtos.LivroDTO;
 import com.desenvolvimento.services.LivroService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -34,5 +36,22 @@ public class LivroResource {
     public ResponseEntity<LivroDTO> findByIsbn(@PathVariable String isbn){
         Livro obj = this.livroService.findbyIsbn(isbn);
         return ResponseEntity.ok().body(new LivroDTO(obj));
+    }
+
+    @PostMapping
+    public ResponseEntity<LivroDTO> create(@Valid @RequestBody LivroDTO dto){
+        Livro livro = livroService.create(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livro.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<LivroDTO> update(@PathVariable Long id, @Valid @RequestBody LivroDTO objDto){
+        Livro Obj = livroService.update(id, objDto);
+        return ResponseEntity.ok().body(new LivroDTO(Obj));
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<LivroDTO> delete(@PathVariable Long id){ //na apostila fala para deixar em grupoprodutoDTO, mas se for colocar aqui teria que ser 2 deletes
+        livroService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
